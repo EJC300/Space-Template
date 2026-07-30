@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ShipData" format=3 uid="uid://d4aa31a4g3udi"]
+
+[ext_resource type="Script" uid="uid://d3lvlgcryj7ru" path="res://ship_scripts/ship_type.gd" id="1_tgrjw"]
+
+[resource]
+script = ExtResource("1_tgrjw")
+model_name = "Fighter.fbx"
+metadata/_custom_type_script = "uid://d3lvlgcryj7ru"

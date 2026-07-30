@@ -1,0 +1,26 @@
+	TODO:
+		
+		Ship Type Resource - done
+		
+		Ship Model Class:
+			Ship 3D Model
+			Ship Collision
+			Ship Model Spawning
+			Ability to spawn and despawn ship model node
+			
+		
+		Ship SDOF Movement
+
+		Speed Limit Toggle With Warning About Origin Shifting
+
+		Chase Camera 
+
+		Basic Health Resource
+
+		Boosting
+
+		Engine Sounds
+		
+		Space Background
+		
+		Basic Example With Ship and Player

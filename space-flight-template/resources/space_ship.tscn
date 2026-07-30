@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://c62ku2d50131w"]
+
+[ext_resource type="Script" uid="uid://chvbsbbwxshmc" path="res://ship_scripts/ship_factory.gd" id="1_fv3bo"]
+[ext_resource type="Resource" uid="uid://d4aa31a4g3udi" path="res://resources/test_ship.tres" id="2_uoj6e"]
+[ext_resource type="PackedScene" uid="uid://dpbariwqafjm2" path="res://ship_models/Fighter.fbx" id="3_c8k4f"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c8k4f"]
+size = Vector3(100, 100, 100)
+
+[node name="SpaceShip" type="Node3D" unique_id=1578795689]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=546773975]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.4122708)
+current = true
+
+[node name="SpaceShip" type="Node3D" parent="." unique_id=106055021]
+script = ExtResource("1_fv3bo")
+ship_data = ExtResource("2_uoj6e")
+
+[node name="@CollisionShape3D@22102" type="CollisionShape3D" parent="SpaceShip" unique_id=411484327]
+shape = SubResource("BoxShape3D_c8k4f")
+
+[node name="Fighter" type="Node3D" parent="." unique_id=2048453494 instance=ExtResource("3_c8k4f")]
