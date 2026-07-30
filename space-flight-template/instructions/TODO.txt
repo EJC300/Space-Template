@@ -9,6 +9,10 @@
 			Ability to spawn and despawn ship model node
 			
 		
+		Ship Tool
+		
+		Ship Node
+		
 		Ship SDOF Movement
 
 		Speed Limit Toggle With Warning About Origin Shifting
@@ -22,5 +26,3 @@
 		Engine Sounds
 		
 		Space Background
-		
-		Basic Example With Ship and Player
