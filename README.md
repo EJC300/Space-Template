@@ -23,7 +23,7 @@ What this is *not* is a full game — not a full game or one with enemies, but i
 - Actual gameplay
 
 ## TODO
-- [ ] Ship Resource
+- [x] Ship Resource
 - [ ] Ship Model Node
 - [ ] Ship Creation Tool 
 - [ ] Ship 6DOF movement
