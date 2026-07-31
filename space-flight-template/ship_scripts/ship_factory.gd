@@ -4,44 +4,40 @@ extends Node3D
 #Ship Collider is determined by the size of the model
 #On scene load the ship factory is removed.
 @export var ship_data : ShipData
-
-var ship_model : ShipModel
-var ship_model_instance : ShipModel
-var collision_instance  : CollisionShape3D
-var ship_mesh_instance : Node3D
 @export var create_model : bool
 @export var delete_model : bool
+var collision : CollisionShape3D
 
-func spawn_collider():
-	ship_model.create_ship_collider()
-	if collision_instance != null:
-		get_parent().add_child(ship_mesh_instance)
-		collision_instance = get_tree().edited_scene_root
-		
-
+var model : Node3D
 func spawn_model():
-	ship_model_instance=ship_model.new()
-	if ship_model_instance != null:
-		get_parent().add_child(ship_mesh_instance)
-		ship_model_instance.owner = get_tree().edited_scene_root
-		ship_mesh_instance.create_ship_model()
+	model = ShipModelController.create_ship_model(ship_data.model_name)
+	get_parent().add_child(model)
+	model.owner = get_tree().edited_scene_root
+
+
 	
-	if ship_mesh_instance != null:
-		get_parent().add_child(ship_mesh_instance)
-		ship_mesh_instance.owner = get_tree().edited_scene_root
-		
-func delete():
-	if delete_model:
-		ship_mesh_instance.queue_free()
-		collision_instance.queue_free()
+func spawn_collider():
+	collision =  ShipModelController.create_ship_collider()
+	collision.name = "Collision" + ship_data.model_name
+	get_parent().add_child(collision)
+	collision.owner = get_tree().edited_scene_root
+	
 func _ready() -> void:
-	queue_free()
+	if !Engine.is_editor_hint():
+		queue_free()
 
 func _process(_delta: float) -> void:
-	if Engine.is_editor_hint() and create_model:
-		spawn_model()
+	if !collision and !model and Engine.is_editor_hint() and create_model:
+		create_model = false
 		spawn_collider()
-		delete()
+		spawn_model()
+	elif delete_model and collision and Engine.is_editor_hint():
+		delete_model = false
+		collision.queue_free()
+		model.queue_free()
+			
+		
+		
 	
 	
 		

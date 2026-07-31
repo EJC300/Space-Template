@@ -3,12 +3,13 @@
 [ext_resource type="Script" uid="uid://chvbsbbwxshmc" path="res://ship_scripts/ship_factory.gd" id="1_fv3bo"]
 [ext_resource type="Resource" uid="uid://d4aa31a4g3udi" path="res://resources/test_ship.tres" id="2_uoj6e"]
 
-[node name="SpaceShip" type="Node3D" unique_id=1578795689]
+[node name="SpaceShip" type="RigidBody3D" unique_id=1897595597]
+gravity_scale = 0.0
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=546773975]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.4122708)
 current = true
 
-[node name="Factory" type="Node3D" parent="." unique_id=22079081]
+[node name="Factory" type="Node3D" parent="." unique_id=162921862]
 script = ExtResource("1_fv3bo")
 ship_data = ExtResource("2_uoj6e")
