@@ -10,6 +10,7 @@ class_name ShipData
 #HEALTH SYSTEM
 #@export var health : health
 #SHIP BEHAVIOR ATTRIUBUTES -> max linear speed, thrust etc.
+@export var mass : float
 @export var has_max_speed : bool
 @export var thrust_forward : float
 @export var thrust_reverse : float

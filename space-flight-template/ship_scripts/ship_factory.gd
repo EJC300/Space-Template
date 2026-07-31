@@ -15,7 +15,6 @@ func spawn_model():
 	model.owner = get_tree().edited_scene_root
 
 
-	
 func spawn_collider():
 	collision =  ShipModelController.create_ship_collider()
 	collision.name = "Collision" + ship_data.model_name
@@ -31,6 +30,7 @@ func _process(_delta: float) -> void:
 		create_model = false
 		spawn_collider()
 		spawn_model()
+		
 	elif delete_model and collision and Engine.is_editor_hint():
 		delete_model = false
 		collision.queue_free()
