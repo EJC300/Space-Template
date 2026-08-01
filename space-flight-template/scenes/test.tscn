@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://c3o7dlogb703j"]
 
 [ext_resource type="Script" uid="uid://di16pcml4yljd" path="res://systems/chase_camera.gd" id="1_errlg"]
+[ext_resource type="Script" uid="uid://3uwgvboah2gj" path="res://ship_scripts/player_ship_controller.gd" id="1_j5jx5"]
+[ext_resource type="Resource" uid="uid://d4aa31a4g3udi" path="res://resources/test_ship.tres" id="2_lpvoh"]
+[ext_resource type="Script" uid="uid://bmwpoy4vjkbre" path="res://space_ship_components/thruster.gd" id="3_at5dv"]
+[ext_resource type="Script" uid="uid://bwsu3f4setc7i" path="res://space_ship_components/add_axis_torque.gd" id="4_jcd4p"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
 
@@ -17,20 +21,33 @@ sky = SubResource("Sky_errlg")
 
 [node name="Test" type="Node3D" unique_id=1016042155]
 
-[node name="RigidBody3D" type="RigidBody3D" parent="." unique_id=1627792062]
+[node name="TestBugaSphere" type="RigidBody3D" parent="." unique_id=1627792062 node_paths=PackedStringArray("thrust", "maneuver")]
+gravity_scale = 0.0
+script = ExtResource("1_j5jx5")
+data = ExtResource("2_lpvoh")
+thrust = NodePath("Thruster")
+maneuver = NodePath("ManeuveringThrust")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D" unique_id=1438420750]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestBugaSphere" unique_id=1438420750]
 shape = SubResource("SphereShape3D_g4v7s")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D" unique_id=912983035]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="TestBugaSphere" unique_id=912983035]
 mesh = SubResource("SphereMesh_g4v7s")
+
+[node name="Thruster" type="Node3D" parent="TestBugaSphere" unique_id=1065335695]
+script = ExtResource("3_at5dv")
+metadata/_custom_type_script = "uid://bmwpoy4vjkbre"
+
+[node name="ManeuveringThrust" type="Node3D" parent="TestBugaSphere" unique_id=1416347266]
+script = ExtResource("4_jcd4p")
+metadata/_custom_type_script = "uid://bwsu3f4setc7i"
 
 [node name="chase_camera" type="Camera3D" parent="." unique_id=891074309 node_paths=PackedStringArray("target")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -0.91919863)
 environment = SubResource("Environment_bl13t")
 script = ExtResource("1_errlg")
-target = NodePath("../RigidBody3D")
+target = NodePath("../TestBugaSphere")
 max_follow_distance = 2.0
 follow_height = 0.2
-max_target_speed = 30.0
+max_target_speed = 120.0
 metadata/_custom_type_script = "uid://di16pcml4yljd"
