@@ -28,7 +28,7 @@ What this is *not* is a full game — not a full game or one with enemies, but i
 - [x] Ship Tool
 - [ ] Ship 6DOF movement
 - [ ] Speed limit toggle with warning about origin shifting
-- [ ] Chase camera
+- [x] Chase camera
 - [ ] Basic health resource
 - [ ] Boosting
 - [ ] Engine sounds
