@@ -18,7 +18,7 @@ func _ready() -> void:
 
 func chase_target(dt : float):
 	offset = Vector3(0.0,follow_height,max_follow_distance)
-	offset.y += target.linear_velocity.y
+	offset.y += target.linear_velocity.y * dt * look_speed
 	
 	var xform = target.transform.translated_local(offset + target.basis.z)
 	var speed = target.linear_velocity.length()
@@ -26,18 +26,20 @@ func chase_target(dt : float):
 
 	current_transform = global_transform.interpolate_with(xform, speed * dt)
 	
-	global_transform = current_transform.orthonormalized()
+	global_transform = current_transform
 	
 
 func look_target(dt : float):
 
 	var direction = (target.global_position  - global_position).normalized()
-	direction.y += target.linear_velocity.y
+	
 	var current_rotation =  Basis.looking_at(direction,target.transform.basis.y)
 	var new_rotation = current_rotation
 	global_transform.basis = global_transform.basis.slerp( new_rotation,look_speed * dt)
-	
 func _physics_process(delta: float) -> void:
+
 	chase_target(delta)
 	look_target(delta)
+	
+	
 	

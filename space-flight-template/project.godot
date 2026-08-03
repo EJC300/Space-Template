@@ -14,10 +14,6 @@ config/name="Space Flight Template"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
-[autoload]
-
-ShipModelController="*uid://6c77eojj5x5c"
-
 [display]
 
 window/stretch/mode="canvas_items"

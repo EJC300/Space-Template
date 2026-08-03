@@ -6,10 +6,8 @@ class_name ShipData
 #Some notes of models, modular ships and components are not supported for this right now.
 
 #MODEL DATA
-@export var model_name : String
 @export var ship_name : String
 #SHIP BEHAVIOR ATTRIUBUTES -> max linear speed, thrust etc.
-
 @export var mass : float
 @export var has_max_speed : bool
 @export var thrust_forward : float
@@ -18,6 +16,7 @@ class_name ShipData
 @export var thrust_vertical : float
 @export var thrust_roll : float
 @export var max_speed : float
+@export var drag_amount : float
 @export var max_angular_speed : float
 
 

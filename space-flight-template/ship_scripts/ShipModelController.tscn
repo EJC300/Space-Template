@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://6c77eojj5x5c"]
-
-[ext_resource type="Script" uid="uid://dytqvnsp7n5qg" path="res://ship_scripts/ship_model.gd" id="1_j05u1"]
-
-[node name="ShipModelController" type="Node3D" unique_id=35829621]
-script = ExtResource("1_j05u1")
-metadata/_custom_type_script = "uid://dytqvnsp7n5qg"

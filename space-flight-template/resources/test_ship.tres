@@ -4,14 +4,13 @@
 
 [resource]
 script = ExtResource("1_tgrjw")
-model_name = "Fighter.fbx"
-ship_name = "BugaSphere"
 mass = 1.0
-thrust_forward = 102.0
-thrust_reverse = 40.0
-thrust_strafe = 5.0
-thrust_vertical = 5.0
+thrust_forward = 25.0
+thrust_reverse = 30.0
+thrust_strafe = 25.0
+thrust_vertical = 16.0
 thrust_roll = 4.0
-max_speed = 4.0
+max_speed = 100.0
+drag_amount = 0.02
 max_angular_speed = 100.0
 metadata/_custom_type_script = "uid://d3lvlgcryj7ru"
