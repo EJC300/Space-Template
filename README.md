@@ -26,7 +26,7 @@ What this is *not* is a full game — not a full game or one with enemies, but i
 - [x] Ship Resource
 - [x] Ship Model Node
 - [x] Ship Tool
-- [ ] Ship 6DOF movement
+- [x] Ship 6DOF movement
 - [ ] Speed limit toggle with warning about origin shifting
 - [x] Chase camera
 - [ ] Basic health resource
