@@ -1,7 +1,7 @@
 # Space Template
 ## About
 
-There is this thing where people have made spaceship controls for other engines, but it usually costs money. I like to make space combat games. Others do too. But no good template exists for Godot. So that's where this comes in.
+There is this thing where people have made spaceship controls for other engines. I like to make space combat games. Others do too. But no good template exists for Godot. So that's where this comes in.
 
 What this is *not* is a full game — not a full game or one with enemies, but it could be rewired for AI and Player schemes.
 
