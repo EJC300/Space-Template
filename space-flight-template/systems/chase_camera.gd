@@ -4,6 +4,7 @@ extends Camera3D
 class_name ChaseCamera
 
 @export var target : Node3D
+@export var look_speed : float
 @export var max_follow_distance : float
 #set follow_height to 0 or less than the height of a cockpit
 @export var follow_height : float
@@ -13,26 +14,29 @@ var offset : Vector3
 var current_transform : Transform3D
 
 func _ready() -> void:
-	offset = Vector3(0.0,follow_height,max_follow_distance)
+	pass
 
 func chase_target(dt : float):
-	var xform = target.transform.translated_local(offset)
+	offset = Vector3(0.0,follow_height,max_follow_distance)
+	offset.y += target.linear_velocity.y
+	
+	var xform = target.transform.translated_local(offset + target.basis.z)
 	var speed = target.linear_velocity.length()
 	speed = clampf(speed,0.5,max_target_speed)
+
 	current_transform = global_transform.interpolate_with(xform, speed * dt)
+	
 	global_transform = current_transform.orthonormalized()
 	
 
 func look_target(dt : float):
-	var angular_speed = deg_to_rad( target.linear_velocity.length() / 4.0)
-	angular_speed = rad_to_deg( min(angular_speed,max_target_speed * 0.5))
-	angular_speed = min(angular_speed,0.0)
-	var direction = (target.global_position  - global_position).normalized()
-	var point = transform.translated_local(target.basis.z * 10).origin
-	var current_rotation = Quaternion(-target.basis.z,Vector3(direction.x,direction.y,0.0) + point)
-	var new_rotation = transform.basis.slerp(current_rotation,angular_speed* dt)
-	transform.basis = new_rotation.orthonormalized()
 
+	var direction = (target.global_position  - global_position).normalized()
+	direction.y += target.linear_velocity.y
+	var current_rotation =  Basis.looking_at(direction,target.transform.basis.y)
+	var new_rotation = current_rotation
+	global_transform.basis = global_transform.basis.slerp( new_rotation,look_speed * dt)
+	
 func _physics_process(delta: float) -> void:
 	chase_target(delta)
 	look_target(delta)

@@ -16,6 +16,7 @@ class_name ShipData
 @export var thrust_reverse : float
 @export var thrust_strafe : float
 @export var thrust_vertical : float
+@export var thrust_roll : float
 @export var max_speed : float
 @export var max_angular_speed : float
 

@@ -43,11 +43,12 @@ script = ExtResource("4_jcd4p")
 metadata/_custom_type_script = "uid://bwsu3f4setc7i"
 
 [node name="chase_camera" type="Camera3D" parent="." unique_id=891074309 node_paths=PackedStringArray("target")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -0.91919863)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.91919863)
 environment = SubResource("Environment_bl13t")
 script = ExtResource("1_errlg")
 target = NodePath("../TestBugaSphere")
-max_follow_distance = 2.0
-follow_height = 0.2
-max_target_speed = 120.0
+look_speed = 45.0
+max_follow_distance = 4.0
+follow_height = 1.2
+max_target_speed = 40.0
 metadata/_custom_type_script = "uid://di16pcml4yljd"
