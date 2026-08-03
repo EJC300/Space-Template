@@ -11,7 +11,6 @@ What this is *not* is a full game — not a full game or one with enemies, but i
 - Support for health and shield/armor using a health resource
 - Chase Camera
 - Basic boosting
-- A fun super cruise thing (sorry, couldn't resist)
 - Example player scene
 - Basic sound
 
@@ -25,9 +24,7 @@ What this is *not* is a full game — not a full game or one with enemies, but i
 ## TODO
 - [x] Ship Resource
 - [x] Ship Model Node
-- [x] Ship Tool
 - [x] Ship 6DOF movement
-- [ ] Speed limit toggle with warning about origin shifting
 - [x] Chase camera
 - [ ] Basic health resource
 - [ ] Boosting
