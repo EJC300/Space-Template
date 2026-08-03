@@ -7,9 +7,9 @@ What this is *not* is a full game — not a full game or one with enemies, but i
 
 ## Features
 
-- Plug and play 6DOF spaceflight
+- Player Example of 6DOF Space Flight
 - Support for health and shield/armor using a health resource
-- Camera that can be set up for first person
+- Chase Camera
 - Basic boosting
 - A fun super cruise thing (sorry, couldn't resist)
 - Example player scene
