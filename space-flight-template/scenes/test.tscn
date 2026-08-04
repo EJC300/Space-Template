@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://di16pcml4yljd" path="res://systems/chase_camera.gd" id="1_errlg"]
 [ext_resource type="Script" uid="uid://3uwgvboah2gj" path="res://ship_scripts/player_ship_controller.gd" id="1_j5jx5"]
 [ext_resource type="Resource" uid="uid://d4aa31a4g3udi" path="res://resources/test_ship.tres" id="2_lpvoh"]
-[ext_resource type="Script" uid="uid://bmwpoy4vjkbre" path="res://space_ship_components/thruster.gd" id="3_at5dv"]
+[ext_resource type="Script" uid="uid://bmwpoy4vjkbre" path="res://space_ship_components/ship_controller.gd" id="3_at5dv"]
 [ext_resource type="Script" uid="uid://bwsu3f4setc7i" path="res://space_ship_components/add_axis_torque.gd" id="4_jcd4p"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
@@ -25,6 +25,8 @@ sky = SubResource("Sky_errlg")
 gravity_scale = 0.0
 script = ExtResource("1_j5jx5")
 data = ExtResource("2_lpvoh")
+radius = 40.0
+dead_zone = 4.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestBugaSphere" unique_id=1438420750]
 shape = SubResource("SphereShape3D_g4v7s")
@@ -32,7 +34,7 @@ shape = SubResource("SphereShape3D_g4v7s")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TestBugaSphere" unique_id=912983035]
 mesh = SubResource("SphereMesh_g4v7s")
 
-[node name="Thruster" type="Node3D" parent="TestBugaSphere" unique_id=1065335695]
+[node name="ShipControler" type="Node3D" parent="TestBugaSphere" unique_id=1065335695]
 script = ExtResource("3_at5dv")
 metadata/_custom_type_script = "uid://bmwpoy4vjkbre"
 
