@@ -1,25 +1,9 @@
-extends RigidBody3D
-class_name PlayerShipController
-@export var data : ShipData
+extends BaseInputComponent
+class_name PlayerInputComponent
 @export var radius : float
 @export var dead_zone : float
-@onready var ship_controller_component = $ShipControler
-var thrust_axis : Vector3
-var radial_thrust_axis : Vector3
-var chase_camera : Camera3D
+@export var chase_camera : Camera3D
 
-
-func _ready() -> void:
-	linear_damp_mode = RigidBody3D.DAMP_MODE_REPLACE
-	angular_damp_mode = RigidBody3D.DAMP_MODE_REPLACE
-	linear_damp = 0.0
-	angular_damp = 0.0
-
-	if !chase_camera:
-		chase_camera = get_viewport().get_camera_3d()
-#-------Get Ship Data--------:
-func get_ship_data():
-	return data
 
 func get_chase_camera():
 	return chase_camera
@@ -57,15 +41,10 @@ func set_input_axis():
 	radial_thrust_axis = radial_thrust_axis.normalized()
 	thrust_axis = thrust_axis.normalized()
 	
-
-func _process(_delta: float) -> void:
+func _process_input():
 	set_input_axis()
-func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-	var delta = Engine.get_physics_ticks_per_second()/36000.0
-	state.linear_velocity += global_basis * ship_controller_component.apply_thrust(get_thrust_axis(),get_ship_data()) * delta
-	state.linear_velocity = global_basis * ship_controller_component.limit_speed(state.linear_velocity,get_ship_data())
-	state.linear_velocity -= global_basis * ship_controller_component.auto_slow_down(thrust_axis,state.linear_velocity,get_ship_data()) * delta
 	
+
 	
 	
 	

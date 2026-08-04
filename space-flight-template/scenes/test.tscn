@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://c3o7dlogb703j"]
 
 [ext_resource type="Script" uid="uid://di16pcml4yljd" path="res://systems/chase_camera.gd" id="1_errlg"]
-[ext_resource type="Script" uid="uid://3uwgvboah2gj" path="res://ship_scripts/player_ship_controller.gd" id="1_j5jx5"]
+[ext_resource type="Script" uid="uid://cdlrouc5f3joo" path="res://space_ship_components/ship.gd" id="1_iyx0m"]
 [ext_resource type="Resource" uid="uid://d4aa31a4g3udi" path="res://resources/test_ship.tres" id="2_lpvoh"]
-[ext_resource type="Script" uid="uid://bmwpoy4vjkbre" path="res://space_ship_components/ship_controller.gd" id="3_at5dv"]
-[ext_resource type="Script" uid="uid://bwsu3f4setc7i" path="res://space_ship_components/add_axis_torque.gd" id="4_jcd4p"]
+[ext_resource type="PackedScene" uid="uid://c0gxbgepcmbvx" path="res://space_ship_components/scenes/ShipComponet.tscn" id="3_74lek"]
+[ext_resource type="PackedScene" uid="uid://dwlgl3be8hfg4" path="res://space_ship_components/scenes/PlayerInput.tscn" id="3_j5jx5"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
 
@@ -21,12 +21,11 @@ sky = SubResource("Sky_errlg")
 
 [node name="Test" type="Node3D" unique_id=1016042155]
 
-[node name="TestBugaSphere" type="RigidBody3D" parent="." unique_id=1627792062]
+[node name="TestBugaSphere" type="RigidBody3D" parent="." unique_id=1627792062 node_paths=PackedStringArray("input_component")]
 gravity_scale = 0.0
-script = ExtResource("1_j5jx5")
-data = ExtResource("2_lpvoh")
-radius = 40.0
-dead_zone = 4.0
+script = ExtResource("1_iyx0m")
+ship_data = ExtResource("2_lpvoh")
+input_component = NodePath("PlayerInput")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestBugaSphere" unique_id=1438420750]
 shape = SubResource("SphereShape3D_g4v7s")
@@ -34,13 +33,12 @@ shape = SubResource("SphereShape3D_g4v7s")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="TestBugaSphere" unique_id=912983035]
 mesh = SubResource("SphereMesh_g4v7s")
 
-[node name="ShipControler" type="Node3D" parent="TestBugaSphere" unique_id=1065335695]
-script = ExtResource("3_at5dv")
-metadata/_custom_type_script = "uid://bmwpoy4vjkbre"
+[node name="ShipComponent" parent="TestBugaSphere" unique_id=974214820 instance=ExtResource("3_74lek")]
 
-[node name="ManeuveringThrust" type="Node3D" parent="TestBugaSphere" unique_id=1416347266]
-script = ExtResource("4_jcd4p")
-metadata/_custom_type_script = "uid://bwsu3f4setc7i"
+[node name="PlayerInput" parent="TestBugaSphere" unique_id=1295566102 node_paths=PackedStringArray("chase_camera") instance=ExtResource("3_j5jx5")]
+radius = 40.0
+dead_zone = 1.0
+chase_camera = NodePath("../../chase_camera")
 
 [node name="chase_camera" type="Camera3D" parent="." unique_id=891074309 node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.91919863)

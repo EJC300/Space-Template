@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://c0gxbgepcmbvx"]
+
+[ext_resource type="Script" uid="uid://bmwpoy4vjkbre" path="res://space_ship_components/ship_controller.gd" id="1_37uc3"]
+
+[node name="ShipComponet" type="Node3D" unique_id=974214820]
+script = ExtResource("1_37uc3")
+metadata/_custom_type_script = "uid://bmwpoy4vjkbre"

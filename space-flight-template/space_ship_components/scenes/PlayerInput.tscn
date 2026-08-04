@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://dwlgl3be8hfg4"]
+
+[ext_resource type="Script" uid="uid://3uwgvboah2gj" path="res://ship_scripts/player_input_component.gd" id="1_hyqhi"]
+
+[node name="PlayerInput" type="Node3D" unique_id=1295566102]
+script = ExtResource("1_hyqhi")
+metadata/_custom_type_script = "uid://3uwgvboah2gj"
