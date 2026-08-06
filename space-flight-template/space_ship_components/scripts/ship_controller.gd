@@ -1,66 +1,61 @@
 extends Node3D
 
 class_name ShipComponent
+
 var ship_thrust: Vector3
 var ship_steer : Vector3
-var final_limited_velocity : Vector3
 
-func update_ship_physics_state(thrust_input : Vector3,steer_input: Vector3,state : PhysicsDirectBodyState3D, ship_data: ShipData):
+func update_ship_physics_state(thrust_input: Vector3, steer_input: Vector3, state: PhysicsDirectBodyState3D, ship_data: ShipData):
 	var delta = state.step
-	var global_rotation_quaternion = state.transform.basis.get_rotation_quaternion()
-	var inverse_rotation = global_rotation_quaternion.inverse()
 	
-	var local_velocity = inverse_rotation * state.linear_velocity
-	var local_angular_velocity = inverse_rotation * state.angular_velocity
-	
-	var speed_squard = pow(state.linear_velocity.length(),2)
-	var angular_speed_squard = pow(state.angular_velocity.length(),2)
-	var velocity_normalized = state.linear_velocity.normalized()
-	var angular_velocity_normalized = state.angular_velocity.normalized()
 
-	#-----Acclerate with the thrust_input of course throttle
-	
+	var ship_basis = state.transform.basis
+
+
+	var local_velocity = ship_basis.get_rotation_quaternion().inverse() * state.linear_velocity
+	var local_angular = ship_basis.get_rotation_quaternion().inverse() * state.angular_velocity
+
+
 	ship_thrust.z = thrust_input.z * ship_data.thrust_forward
-	
 	ship_thrust.y = thrust_input.y * ship_data.thrust_vertical
 	ship_thrust.x = thrust_input.x * ship_data.thrust_strafe
-	
-	#----Arcade Style Drag To Slow Down
-	var space_drag = -velocity_normalized * 0.5 * speed_squard * ship_data.drag_amount
-	#----Arcade Torque Drag
-	var space_rotational_drag = -angular_velocity_normalized * 0.5 * angular_speed_squard * ship_data.angular_drag_amount
 
 	
+	local_velocity += ship_thrust * delta
+
+
+	var drag_x = -local_velocity.x * abs(local_velocity.x) * ship_data.drag_amount
+	var drag_y = -local_velocity.y * abs(local_velocity.y) * ship_data.drag_amount
+	var drag_z = -local_velocity.z * abs(local_velocity.z) * ship_data.drag_amount
 	
-	#-----Turn with steer 
-	ship_steer = steer_input* delta
-	ship_steer.x *= ship_data.thrust_pitch
-	ship_steer.y *= ship_data.thrust_yaw
-	ship_steer.z *= ship_data.thrust_roll
+	local_velocity += Vector3(drag_x, drag_y, drag_z) * delta
+
+
+	var limit_z = clampf(local_velocity.z, -ship_data.max_speed, ship_data.max_reverse_speed)
+	var limit_x = clampf(local_velocity.x, -ship_data.max_maneuver_speed, ship_data.max_maneuver_speed)
+	var limit_y = clampf(local_velocity.y, -ship_data.max_maneuver_speed, ship_data.max_maneuver_speed)
+	
+	local_velocity.z = lerp(local_velocity.z, limit_z, ship_data.thrust_reverse * delta)
+	local_velocity.x = lerp(local_velocity.x, limit_x, ship_data.thrust_reverse * delta)
+	local_velocity.y = lerp(local_velocity.y, limit_y, ship_data.thrust_reverse * delta)
+
+
+	ship_steer.x = steer_input.x * ship_data.thrust_pitch
+	ship_steer.y = steer_input.y * ship_data.thrust_yaw
+	ship_steer.z = steer_input.z * ship_data.thrust_roll
 	
 
+	local_angular += ship_steer * delta
 	
-	#----Apply Velocity Directly To State
 
-	local_velocity += (ship_thrust + space_drag) * delta
-	local_angular_velocity += (ship_steer + space_rotational_drag) * delta
+	var rot_drag = -local_angular * local_angular.length() * ship_data.angular_drag_amount
+	local_angular += rot_drag * delta
 
 	
-	#----Apply Agnular Velocity Directly To State	
-	state.angular_velocity = ship_steer + space_rotational_drag
-	state.angular_velocity = state.transform.basis.get_rotation_quaternion()  *state.angular_velocity
-	
-		#-----Limit Speed at all axis
-	final_limited_velocity.z = clampf(local_velocity.z,-ship_data.max_speed,ship_data.max_reverse_speed)
-	final_limited_velocity.y = clampf(local_velocity.y,-ship_data.max_maneuver_speed,ship_data.max_maneuver_speed)
-	final_limited_velocity.x = clampf(local_velocity.x,-ship_data.max_maneuver_speed,ship_data.max_maneuver_speed)
-	
-	local_velocity = lerp(local_velocity, final_limited_velocity, ship_data.thrust_reverse * delta)
+	if local_angular.length() > ship_data.max_angular_speed:
+		local_angular = local_angular.normalized() * ship_data.max_angular_speed
 
-	#----Limit rotation Speed
-	if abs(local_angular_velocity.length()) > ship_data.max_angular_speed:
-		local_angular_velocity = local_angular_velocity.normalized() * ship_data.max_angular_speed
+	state.linear_velocity = ship_basis.get_rotation_quaternion() * local_velocity
+	state.angular_velocity = ship_basis.get_rotation_quaternion() * local_angular
+
 	
-	state.linear_velocity = global_rotation_quaternion * local_velocity
-	state.angular_velocity = global_rotation_quaternion * local_angular_velocity
-	print(state.linear_velocity)

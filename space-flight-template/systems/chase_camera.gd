@@ -29,15 +29,27 @@ func chase_target(dt : float):
 	global_transform = current_transform
 	
 
-func look_target(dt : float):
-	var direction = (target.global_position  - global_position).normalized()
-	var world_up_dir = target.transform.basis.y.cross(Vector3.RIGHT)
-	world_up_dir =target.basis.get_rotation_quaternion() * world_up_dir.lerp(Vector3.UP,dt * world_up_change_speed)
-	var current_rotation =  Basis.looking_at(direction,world_up_dir)
-	var new_rotation = current_rotation
-	camera_on_target.look_at(target.global_position +target.basis.get_rotation_quaternion() *target.basis.z * -2,world_up_dir)
-	global_transform.basis = global_transform.basis.slerp( new_rotation,look_speed * dt)
+func look_target(dt: float):
+
+	var to_target = target.global_position - global_position
+	if to_target.is_zero_approx():
+		return
+	var direction = to_target.normalized()
+	
+	var world_up_dir = target.global_basis.y
+	
+
+	var target_basis = Basis.looking_at(direction, world_up_dir)
+	
+
+	global_basis = global_basis.slerp(target_basis, look_speed * dt).orthonormalized()
+	
+
+	var target_chase_pos = target.global_position + (target.global_basis.z * 15.0) + (target.global_basis.y * 3.0)
+	global_position = global_position.lerp(target_chase_pos, look_speed * dt)
+
 func _physics_process(delta: float) -> void:
+	top_level = true
 	chase_target(delta)
 	look_target(delta)
 	
