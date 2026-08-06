@@ -24,7 +24,7 @@ What this is *not* is a full game — not a full game or one with enemies, but i
 ## TODO
 - [x] Ship Resource
 - [x] Ship 6DOF movement
-- [x] Chase camera
+- [] Chase camera
 - [ ] Basic health resource
 - [ ] Boosting
 - [ ] Engine sounds
