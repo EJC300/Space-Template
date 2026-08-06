@@ -44,7 +44,7 @@ func set_input_axis():
 	thrust_axis.z = Input.get_axis("throttle_up","throttle_down")
 	radial_thrust_axis.z = Input.get_axis("roll_left","roll_right")
 	radial_thrust_axis.x = get_mouse_steer().y
-	radial_thrust_axis.y = get_mouse_steer().x
+	radial_thrust_axis.y = -get_mouse_steer().x
 	radial_thrust_axis = radial_thrust_axis.normalized()
 	thrust_axis = thrust_axis.normalized()
 	

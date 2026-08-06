@@ -27,8 +27,8 @@ func update_ship_physics_state(thrust_input: Vector3, steer_input: Vector3, stat
 	var drag_x = -local_velocity.x * abs(local_velocity.x) * ship_data.drag_amount
 	var drag_y = -local_velocity.y * abs(local_velocity.y) * ship_data.drag_amount
 	var drag_z = -local_velocity.z * abs(local_velocity.z) * ship_data.drag_amount
-	
-	local_velocity += Vector3(drag_x, drag_y, drag_z) * delta
+	var total_drag = Vector3(drag_x, drag_y, drag_z)
+	local_velocity += total_drag * delta
 
 
 	var limit_z = clampf(local_velocity.z, -ship_data.max_speed, ship_data.max_reverse_speed)
@@ -57,5 +57,5 @@ func update_ship_physics_state(thrust_input: Vector3, steer_input: Vector3, stat
 
 	state.linear_velocity = ship_basis.get_rotation_quaternion() * local_velocity
 	state.angular_velocity = ship_basis.get_rotation_quaternion() * local_angular
-
+	print(state.linear_velocity.length())
 	
