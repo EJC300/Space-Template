@@ -1,52 +1,54 @@
 [gd_scene format=3 uid="uid://c3o7dlogb703j"]
 
 [ext_resource type="Script" uid="uid://di16pcml4yljd" path="res://systems/chase_camera.gd" id="1_errlg"]
-[ext_resource type="Script" uid="uid://cdlrouc5f3joo" path="res://space_ship_components/ship.gd" id="1_iyx0m"]
+[ext_resource type="Script" uid="uid://cdlrouc5f3joo" path="res://space_ship_components/scripts/ship.gd" id="1_iyx0m"]
 [ext_resource type="Resource" uid="uid://d4aa31a4g3udi" path="res://resources/test_ship.tres" id="2_lpvoh"]
 [ext_resource type="PackedScene" uid="uid://c0gxbgepcmbvx" path="res://space_ship_components/scenes/ShipComponet.tscn" id="3_74lek"]
 [ext_resource type="PackedScene" uid="uid://dwlgl3be8hfg4" path="res://space_ship_components/scenes/PlayerInput.tscn" id="3_j5jx5"]
+[ext_resource type="PackedScene" uid="uid://dpbariwqafjm2" path="res://ship_models/Fighter.fbx" id="3_lpvoh"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_g4v7s"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_g4v7s"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_cc5ib"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bl13t"]
+[sub_resource type="Sky" id="Sky_tgrjw"]
+sky_material = SubResource("ProceduralSkyMaterial_cc5ib")
 
-[sub_resource type="Sky" id="Sky_errlg"]
-sky_material = SubResource("ProceduralSkyMaterial_bl13t")
-
-[sub_resource type="Environment" id="Environment_bl13t"]
+[sub_resource type="Environment" id="Environment_lpvoh"]
 background_mode = 2
-sky = SubResource("Sky_errlg")
+sky = SubResource("Sky_tgrjw")
 
 [node name="Test" type="Node3D" unique_id=1016042155]
 
-[node name="TestBugaSphere" type="RigidBody3D" parent="." unique_id=1627792062 node_paths=PackedStringArray("input_component")]
+[node name="TestShip" type="RigidBody3D" parent="." unique_id=1627792062 node_paths=PackedStringArray("input_component")]
 gravity_scale = 0.0
 script = ExtResource("1_iyx0m")
 ship_data = ExtResource("2_lpvoh")
 input_component = NodePath("PlayerInput")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="TestBugaSphere" unique_id=1438420750]
+[node name="Fighter" parent="TestShip" unique_id=2048453494 instance=ExtResource("3_lpvoh")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="TestShip" unique_id=1438420750]
 shape = SubResource("SphereShape3D_g4v7s")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="TestBugaSphere" unique_id=912983035]
-mesh = SubResource("SphereMesh_g4v7s")
+[node name="ShipComponent" parent="TestShip" unique_id=974214820 instance=ExtResource("3_74lek")]
 
-[node name="ShipComponent" parent="TestBugaSphere" unique_id=974214820 instance=ExtResource("3_74lek")]
-
-[node name="PlayerInput" parent="TestBugaSphere" unique_id=1295566102 node_paths=PackedStringArray("chase_camera") instance=ExtResource("3_j5jx5")]
+[node name="PlayerInput" parent="TestShip" unique_id=1295566102 node_paths=PackedStringArray("chase_camera", "ship") instance=ExtResource("3_j5jx5")]
 radius = 40.0
 dead_zone = 1.0
-chase_camera = NodePath("../../chase_camera")
+chase_camera = NodePath("../../ChaseCamera/Camera3D")
+ship = NodePath("..")
 
-[node name="chase_camera" type="Camera3D" parent="." unique_id=891074309 node_paths=PackedStringArray("target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.91919863)
-environment = SubResource("Environment_bl13t")
+[node name="ChaseCamera" type="Node3D" parent="." unique_id=394818759 node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.1238308)
 script = ExtResource("1_errlg")
-target = NodePath("../TestBugaSphere")
-look_speed = 15.0
-max_follow_distance = 4.0
-follow_height = 1.2
-max_target_speed = 40.0
+target = NodePath("../TestShip")
+world_up_change_speed = 45.0
+look_speed = 40.0
+max_follow_distance = 10.195
+follow_height = 5.0
+max_target_speed = 100.0
 metadata/_custom_type_script = "uid://di16pcml4yljd"
+
+[node name="Camera3D" type="Camera3D" parent="ChaseCamera" unique_id=1567717482]
+environment = SubResource("Environment_lpvoh")
