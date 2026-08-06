@@ -2,16 +2,13 @@ extends Node3D
 #can only follow rigidbody ships
 
 class_name ChaseCamera
-
 @export var target : Node3D
-@export var world_up_change_speed : float
 @export var look_speed : float
 @export	var rot_speed = 1.0
 @export var max_follow_distance : float
-#set follow_height to 0 or less than the height of a cockpit
 @export var follow_height : float
-#max_target_speed effects how far the camera lags behind
 @export var max_target_speed : float
+@export var pos_speed = 10.0 
 @onready var camera_on_target = $Camera3D
 var offset : Vector3
 var current_transform : Transform3D
@@ -33,7 +30,7 @@ func chase_target(dt : float):
 	var target_world_pos = target.global_transform.translated_local(base_offset).origin
 
 
-	var pos_speed = 10.0 
+
 	global_position = global_position.lerp(target_world_pos, pos_speed * dt)
 
 
